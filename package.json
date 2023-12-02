@@ -1,0 +1,19 @@
+{
+  "name": "docker_sync",
+  "version": "1.0.0",
+  "description": "",
+  "main": "1.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helson-lin/docker_sync_template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helson-lin/docker_sync_template/issues"
+  },
+  "homepage": "https://github.com/helson-lin/docker_sync_template#readme"
+}
