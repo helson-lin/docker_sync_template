@@ -37,9 +37,13 @@ jobs:
       run: |
         if [[ "${{ env.TAG }}" == *beta* ]]; then
           echo "::set-output name=tags::h55205l/con:${{ env.TAG }}"
+          echo "::set-output name=armtags:h55205l/con:arm-${{ env.TAG }}"
         else
           echo "::set-output name=tags::h55205l/con:latest,h55205l/con:${{ env.TAG }}"
+          echo "::set-output name=armtags::h55205l/con:arm,h55205l/con:arm-${{ env.TAG }}"
         fi
+
+        
 
 
     - name: Build And Push Docker image
@@ -59,5 +63,5 @@ jobs:
         file: Dockerfile-arm
         push: true
         platforms: linux/arm64
-        tags: h55205l/con:arm,h55205l/con:arm-${{ env.TAG }}
+        tags: ${{ steps.docker_tags.outputs.armtags }}
 
