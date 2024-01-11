@@ -32,14 +32,18 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build Docker image
+    - name: Build And Push Docker image
+      if: contains(env.TAG, 'beta') == false
       uses: docker/build-push-action@v3
       with:
-        context: ./
-        file: Dockerfile
-        push: true
-        platforms: linux/amd64
-        tags: h55205l/con:latest,h55205l/con:${{ env.TAG }}
+          context: ./
+          file: Dockerfile
+          push: true
+          platforms: linux/amd64
+          tags: |
+            h55205l/con:${{ env.TAG }}
+            ${{ contains(env.TAG, 'beta') == false && 'h55205l/con:latest' || '' }}
+
 
     - name: Build Docker Arm image
       uses: docker/build-push-action@v3
