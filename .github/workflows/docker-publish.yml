@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         arch: [x64, arm64]
-        node-version: [21]
+        node-version: [14]
 
     runs-on: ${{ matrix.os }}
 
@@ -25,7 +25,7 @@ jobs:
 
     - name: Npm Install
       run: |
-        npm install --legacy-peer-deps
+        npm install
 
     - name: Build Release
       run: pkg .
