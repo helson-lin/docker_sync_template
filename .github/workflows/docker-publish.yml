@@ -34,6 +34,7 @@ jobs:
 
     - name: CP File
       id: mv_file
+      working-directory: /
       run: cp -r ./tmp ./files
 
     - name: Prepare Docker Tags
