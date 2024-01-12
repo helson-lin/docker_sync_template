@@ -11,19 +11,28 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         architecture: [x64, arm64]
         node-version: [14]
+        pkg-target: [host]
 
     runs-on: ${{ matrix.os }}
     permissions: write-all
 
     steps:
-
-    - name: Package into node binary
-      uses: lando/pkg-action@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        entrypoint: bin/cli
-        arch: ${{ matrix.arch }}
         node-version: ${{ matrix.node-version }}
-        os: ${{ matrix.os }}
+        architecture: ${{ matrix.architecture }}
+      
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Npm Install
+      run: |
+        npm install
+        npm install -g pkg
+
+    - name: Build Release
+      run: pkg . --target ${{ matrix.pkg-target }}
 
     - name: release
       uses: softprops/action-gh-release@v1
