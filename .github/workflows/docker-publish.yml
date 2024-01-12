@@ -2,42 +2,36 @@ name: Build and push Docker image
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+    tags:
+        - 'v*.*.*'
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        architecture: [x64, arm64]
-        node-version: [14]
-        pkg-target: [host]
-
-    runs-on: ${{ matrix.os }}
-    permissions: write-all
-
+    runs-on: ubuntu-latest
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-          architecture: ${{ matrix.architecture }}
 
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Npm Install
-        run: |
-          npm install -g pkg
-          npm install --build-from-source
+    - name: Copy Sqllite Binding
+      id: copy_file
+      run: |
+          mkdir -p ./node_modules/sqlite3/lib/binding/
+          cp -r ./package/* ./node_modules/sqlite3/lib/binding/
 
-      - name: Build Release
-        run: pkg . --target ${{ matrix.pkg-target }}
+    - name: Npm Install
+      run: |
+        npm install 
+        npm install sqlite3 --build-from-source
 
-      - name: release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: "dist/**"
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+    - name: Build Release
+      run: npm run pkg
+    # step7: create release
+    - name: release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: "dist/**"
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
