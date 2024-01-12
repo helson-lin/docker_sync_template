@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        arch: [x64, arm64]
+        architecture: [x64, arm64]
         node-version: [14]
 
     runs-on: ${{ matrix.os }}
@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
+        architecture: ${{ matrix.architecture }}
       
     - name: Checkout code
       uses: actions/checkout@v2
@@ -29,8 +30,13 @@ jobs:
         npm install
         npm install -g pkg
 
-    - name: Build Release
-      run: pkg . --target ${{ matrix.pkg-target }}
+    - name: Package into node binary
+      uses: lando/pkg-action@v2
+      with:
+        entrypoint: bin/cli
+        arch: ${{ matrix.arch }}
+        node-version: ${{ matrix.node-version }}
+        os: ${{ matrix.os }}
 
     - name: release
       uses: softprops/action-gh-release@v1
