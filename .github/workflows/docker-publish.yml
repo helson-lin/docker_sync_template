@@ -13,6 +13,7 @@ jobs:
         node-version: [14]
 
     runs-on: ${{ matrix.os }}
+    permissions: write-all
 
     steps:
     - name: Set up Node.js
