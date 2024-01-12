@@ -32,6 +32,10 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: CP File
+      id: mv_file
+      run: cp -r ./tmp ./files
+
     - name: Prepare Docker Tags
       id: docker_tags
       run: |
