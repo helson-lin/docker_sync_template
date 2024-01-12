@@ -26,7 +26,6 @@ jobs:
     - name: Npm Install
       run: |
         npm install --legacy-peer-deps
-        npm install sqlite3 --build-from-source
 
     - name: Build Release
       run: pkg .
