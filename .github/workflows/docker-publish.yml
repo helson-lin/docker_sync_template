@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: upgrade gcc
-      run: sudo apt-get upgrade
+      run: sudo apt-get update
 
     - name: Checkout code
       uses: actions/checkout@v2
