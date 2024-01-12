@@ -34,11 +34,10 @@ jobs:
 
     - name: CP File
       id: mv_file
-      working-directory: /
+      working-directory: ./
       run: |
         echo $PWD
         ls
-        cp -r ./tmp ./files
 
     - name: Prepare Docker Tags
       id: docker_tags
