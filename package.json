@@ -20,7 +20,8 @@
       "db.js"
     ],
     "assets": [
-      "node_modules/sqlite3/lib/binding/**/*"
+      "node_modules/sqlite3/lib/binding/**/*",
+      "node_modules/sqlite3/build/Release/**/*"
     ],
     "targets": [
       "node14-macos-arm64",
