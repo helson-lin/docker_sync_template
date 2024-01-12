@@ -16,14 +16,6 @@ jobs:
     permissions: write-all
 
     steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        architecture: ${{ matrix.architecture }}
-      
-    - name: Checkout code
-      uses: actions/checkout@v2
 
     - name: Package into node binary
       uses: lando/pkg-action@v2
