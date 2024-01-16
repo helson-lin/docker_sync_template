@@ -1,5 +1,6 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require('sqlite3');
 
+console.log(process.env.TMPDIR)
 const dbname = 'mysqlite';
 // 创建并连接一个数据库
 const db = new sqlite3.Database(dbname)
